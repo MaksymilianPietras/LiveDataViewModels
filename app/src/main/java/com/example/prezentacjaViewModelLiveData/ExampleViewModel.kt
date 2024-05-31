@@ -14,7 +14,7 @@ class ExampleViewModel : ViewModel() {
     val count: LiveData<Int> get() = _counter
 
     init {
-        _text.value = "Hello, LiveData!"
+        _text.value = "LiveData: 0"
         _counter.value = 0
     }
 

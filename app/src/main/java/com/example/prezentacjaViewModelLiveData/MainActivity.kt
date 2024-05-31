@@ -6,27 +6,41 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.prezentacjaViewModelLiveData.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
     private var viewModel: ExampleViewModel? = null
-
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.lifecycleOwner = this
         viewModel = ViewModelProvider(this)[ExampleViewModel::class.java]
+        binding.viewModel = viewModel
+
+        val user = User(20)
+        binding.user = user
 
         viewModel!!.text.observe(this) { newText ->
             println("OBSERWATOR WIDZI ZMIANE")
-            findViewById<TextView>(R.id.textView).text = newText
+            binding.textView.text = newText
         }
 
-        findViewById<Button>(R.id.button).setOnClickListener {
+        binding.button.setOnClickListener {
             viewModel!!.increaseCounter()
-            viewModel!!.updateText("Zmiana nr: ${viewModel!!.count.value}")
+            viewModel!!.updateText("Live Data: ${viewModel!!.count.value}")
+        }
+
+        binding.buttonAge.setOnClickListener {
+
+            user.age++
+            binding.user = user
         }
     }
+
 }

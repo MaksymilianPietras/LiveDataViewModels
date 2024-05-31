@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.buttonAge.setOnClickListener {
-
             user.age++
             binding.user = user
         }

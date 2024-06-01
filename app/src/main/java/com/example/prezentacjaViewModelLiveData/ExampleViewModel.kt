@@ -13,6 +13,8 @@ class ExampleViewModel : ViewModel() {
     private val _counter = MutableLiveData<Int>()
     val count: LiveData<Int> get() = _counter
 
+    val message = MutableLiveData<String>()
+
     init {
         _text.value = "LiveData: 0"
         _counter.value = 0

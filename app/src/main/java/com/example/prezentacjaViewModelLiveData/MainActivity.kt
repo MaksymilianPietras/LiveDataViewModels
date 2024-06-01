@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        viewModel = ViewModelProvider(this)[ExampleViewModel::class.java]
 
         //Data Binding
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -31,7 +32,6 @@ class MainActivity : AppCompatActivity() {
 
 
         // ViewModel LiveData
-        viewModel = ViewModelProvider(this)[ExampleViewModel::class.java]
         viewModel!!.text.observe(this) { newText ->
             println("OBSERWATOR WIDZI ZMIANE")
             binding.textView.text = newText
@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
             viewModel!!.updateText("LiveData: ${viewModel!!.count.value}")
         }
 
-    }
 
+        // Two-way Data Binding with ViewModel and LiveData
+        binding.viewModel = viewModel
+    }
 }

@@ -1,4 +1,5 @@
 package com.example.prezentacjaViewModelLiveData
 
-
-class User(var age: Int)
+data class User(
+    var age: Int = 20
+)

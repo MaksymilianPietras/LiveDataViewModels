@@ -3,7 +3,6 @@ package com.example.prezentacjaViewModelLiveData
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -18,28 +17,31 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        //Data Binding
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
-        viewModel = ViewModelProvider(this)[ExampleViewModel::class.java]
-        binding.viewModel = viewModel
 
         val user = User(20)
         binding.user = user
-
-        viewModel!!.text.observe(this) { newText ->
-            println("OBSERWATOR WIDZI ZMIANE")
-            binding.textView.text = newText
-        }
-
-        binding.button.setOnClickListener {
-            viewModel!!.increaseCounter()
-            viewModel!!.updateText("Live Data: ${viewModel!!.count.value}")
-        }
 
         binding.buttonAge.setOnClickListener {
             user.age++
             binding.user = user
         }
+
+
+        // ViewModel LiveData
+        viewModel = ViewModelProvider(this)[ExampleViewModel::class.java]
+        viewModel!!.text.observe(this) { newText ->
+            println("OBSERWATOR WIDZI ZMIANE")
+            binding.textView.text = newText
+        }
+
+        findViewById<Button>(R.id.button).setOnClickListener {
+            viewModel!!.increaseCounter()
+            viewModel!!.updateText("LiveData: ${viewModel!!.count.value}")
+        }
+
     }
 
 }
